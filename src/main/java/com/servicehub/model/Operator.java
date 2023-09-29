@@ -2,9 +2,7 @@ package com.servicehub.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
 import jakarta.validation.constraints.Pattern.Flag;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "operator")
+@Table(name = "operators")
 public class Operator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,13 +25,9 @@ public class Operator {
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-
     @NotBlank(message = "you must provide the operator email")
-	  @Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\\\.[a-z] {2,3}", flags = Flag.CASE_INSENSITIVE,
+	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\\\.[a-z] {2,3}", flags = Flag.CASE_INSENSITIVE,
 			message="Invaid email id")
-
-    @Email(message = "Invalid email format")
-
     private String email;
 
     @NotBlank(message = "Mobile number cannot be blank")
@@ -52,12 +46,10 @@ public class Operator {
 
     @ManyToMany(mappedBy = "operators")
     private List<Issue> issues;
-
     
     @OneToOne
     @JoinColumn(name = "login_id")
     private Login login;
-
 
     public Operator(String firstName, String lastName, String email, String mobile, String city, List<Call> calls,
                     Department department, List<Issue> issues) {

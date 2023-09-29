@@ -26,17 +26,11 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-	
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
-        	
-        	
-        	
-        	
+
             SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
-            
-            
             
             String jwt = Jwts.builder()
             		.setIssuer("IssuerName")

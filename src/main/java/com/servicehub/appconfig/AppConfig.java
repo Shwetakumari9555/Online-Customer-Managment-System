@@ -42,12 +42,7 @@ public class AppConfig {
 		.authorizeHttpRequests(auth ->{
 			auth
 				.requestMatchers(HttpMethod.POST,"/users").permitAll()
-				.requestMatchers(HttpMethod.GET, "/user/logIn").hasRole("USER")
-		        .requestMatchers(HttpMethod.POST, "/bookings/**").hasRole("USER")
-		        .requestMatchers(HttpMethod.PUT, "/bookings/*/rooms").hasRole("USER")
-		        .requestMatchers(HttpMethod.PUT, "/bookings/*/").hasRole("USER")
-		        .requestMatchers(HttpMethod.GET, "/users/*/bookings").hasRole("USER")
-		        .requestMatchers(HttpMethod.GET, "/*/recommended-properties").hasRole("USER")
+				// write all request for end points here
 		       
 				.anyRequest().authenticated();
 				})
@@ -67,20 +62,7 @@ public class AppConfig {
 }
 
 
-//		.authorizeHttpRequests(auth ->{
-//			auth
-//				.requestMatchers(HttpMethod.POST,"/customers").permitAll()
-//				.requestMatchers(HttpMethod.GET, "/customers","/hello").hasRole("ADMIN")
-//				.requestMatchers(HttpMethod.GET, "/customers/**").hasAnyRole("ADMIN","USER")
-//				.anyRequest().authenticated();
-//			
-//				})
-//			.csrf(csrf -> csrf.disable())
-//			.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-//			.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
-//			.formLogin(Customizer.withDefaults())
-//			.httpBasic(Customizer.withDefaults());
-//		
+		
 
 	
 
