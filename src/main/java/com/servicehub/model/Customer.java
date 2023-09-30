@@ -17,7 +17,7 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerd;
+    private int customerId;
 
     @NotBlank(message = "First name cannot be blank")
     private String firstName;
@@ -26,8 +26,9 @@ public class Customer {
     private String lastName;
 
     @NotBlank(message = "you must provide the customer email")
-	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\\\.[a-z] {2,3}", flags = Flag.CASE_INSENSITIVE,
-			message="Invaid email id")
+    @Email
+//	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\.\[a-z] {2,3}", flags = Flag.CASE_INSENSITIVE,
+//			message="Invaid email id")
     private String email;
 
     @NotBlank(message = "Mobile number cannot be blank")
