@@ -20,106 +20,184 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.servicehub.exception.DatabaseOperationException;
+import com.servicehub.exception.DepartmentAlreadyExistsException;
 import com.servicehub.exception.DepartmentException;
+import com.servicehub.exception.DepartmentNotFoundException;
+import com.servicehub.exception.NotFoundException;
+import com.servicehub.exception.OperatorAlreadyExistsException;
 import com.servicehub.exception.OperatorException;
 import com.servicehub.model.Department;
 import com.servicehub.model.Operator;
+import com.servicehub.service.AdminService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+	
+	 @Autowired
+	 private AdminService adminService; 
 
-	@Autowired
-	private AdminService adminService;
+	 @PostMapping("/departments/add")
+	    public ResponseEntity<String> addDepartment(@RequestBody Department department) {
+	        try {
+	            // Call the service layer to add the department
+	            boolean added = adminService.addDepartment(department);
+	            
+	            if (added) {
+	                return ResponseEntity.status(HttpStatus.CREATED).body("Department added successfully");
+	            } else {
+	                return ResponseEntity.status(HttpStatus.CONFLICT).body("Department with the same name already exists");
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add department to the database");
+	        } catch (DepartmentAlreadyExistsException e) {
+	            // Handle the case where the department already exists
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Department with the same name already exists");
+	        }
+	    }
+	 
+	 @DeleteMapping("/departments/remove/{departmentId}")
+	    public ResponseEntity<String> removeDepartment(@PathVariable int departmentId) {
+	        try {
+	            // Call the service layer to remove the department
+	            boolean removed = adminService.removeDepartment(departmentId);
+	            
+	            if (removed) {
+	                return ResponseEntity.ok("Department removed successfully");
+	            } else {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Department with the given ID does not exist");
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove department from the database");
+	        }
+	    }
+	 
+	    @PutMapping("/departments/modify")
+	    public ResponseEntity<Department> modifyDepartment(@RequestBody Department department) {
+	        try {
+	            // Call the service layer to modify the department
+	            Department updatedDepartment = adminService.modifyDepartment(department);
+	            
+	            if (updatedDepartment != null) {
+	                return ResponseEntity.ok(updatedDepartment);
+	            } else {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        } catch (DepartmentNotFoundException e) {
+	            // Handle the case where the department with the given ID does not exist
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        }
+	    }
+	    
+	    @GetMapping("/departments/{departmentId}")
+	    public ResponseEntity<Department> findDepartmentById(@PathVariable int departmentId) {
+	        try {
+	            // Call the service layer to find the department by ID
+	            Department department = adminService.findDepartmentById(departmentId);
+	            
+	            return ResponseEntity.ok(department);
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        } catch (DepartmentNotFoundException e) {
+	            // Handle the case where the department with the given ID does not exist
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        }
+	    }
+	    
+	    @PostMapping("/operators/add")
+	    public ResponseEntity<String> addOperator(@RequestBody Operator operator) {
+	        try {
+	            // Call the service layer to add the operator
+	            boolean added = adminService.addOperator(operator);
+
+	            if (added) {
+	                return ResponseEntity.status(HttpStatus.CREATED).body("Operator added successfully");
+	            } else {
+	                return ResponseEntity.status(HttpStatus.CONFLICT).body("Operator with the same username already exists");
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add operator to the database");
+	        }  catch (OperatorAlreadyExistsException e) {
+	            // Handle the case where an operator with the same username already exists
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Operator with the same username already exists");
+	        }
+	    }
+	    
+	    @DeleteMapping("/operators/remove/{operatorId}")
+	    public ResponseEntity<String> removeOperator(@PathVariable int operatorId) {
+	        try {
+	            // Call the service layer to remove the operator
+	            boolean removed = adminService.removeOperator(operatorId);
+	            
+	            if (removed) {
+	                return ResponseEntity.ok("Operator removed successfully");
+	            } else {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Operator with the given ID does not exist");
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove operator from the database");
+	        }
+	    }
+	    
+	    
+	    @PutMapping("/operators/modify")
+	    public ResponseEntity<Operator> modifyOperator(@RequestBody Operator operator) {
+	        try {
+	            // Call the service layer to modify the operator
+	            Operator updatedOperator = adminService.modifyOperator(operator);
+	            
+	            if (updatedOperator != null) {
+	                return ResponseEntity.ok(updatedOperator);
+	            } else {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	            }
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        } catch (NotFoundException e) {
+	            // Handle the case where the operator with the given ID does not exist
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        }
+	    }
+
     
-	@Autowired
-	private OperatorService operatorService;
-	@Autowired
-	private PasswordEncoder  passwordEncoder;
-
-	 @GetMapping("/signin")
-		public ResponseEntity<String> logInUserHandler(Authentication auth) throws  LoginException{
-			 Admin opt= adminService.findByUsername(auth.getName());
-			 return new ResponseEntity<>(opt.getUsername()+" Logged In Successfully", HttpStatus.ACCEPTED);
-		}
-
-	
-	@PostMapping("/")
-	public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) throws LoginException {
-		admin.setPassword(passwordEncoder.encode(admin.getPassword())) ;
-		Admin createdAdmin = adminService.createAdmin(admin);
-		return new ResponseEntity<Admin>(createdAdmin, HttpStatus.CREATED);
-	}
-   
-	@PostMapping("/addOperator")
-	public ResponseEntity<Operator> createOperator(@RequestBody Operator operator) throws LoginException, OperatorException {
-		operator.setPassword(passwordEncoder.encode(operator.getPassword())) ;
-		Operator createdOperator = operatorService.createOperator(operator);
-		return new ResponseEntity<Operator>(createdOperator, HttpStatus.CREATED);
-	}
-	
-	
-
-	@PostMapping("/addDepartments")
-	public ResponseEntity<Department> addDepartment(@RequestBody Department department) throws LoginException {
-		Department savedDepartment = adminService.addDepartment(department);
-		return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
-	}
-
-	@DeleteMapping("/departments/{departmentId}")
-	public ResponseEntity<Object> removeDepartment(@PathVariable int departmentId)
-			throws DepartmentException, LoginException {
-		Department removedDepartment = adminService.removeDepartment(departmentId);
-		return new ResponseEntity<>(removedDepartment, HttpStatus.OK);
-	}
-
-	@PutMapping("/departments/{departmentId}/{name}")
-	public ResponseEntity<Object> modifyDepartment(@PathVariable int departmentId, @PathVariable String name)
-			throws DepartmentException, LoginException {
-		Department modifiedDepartment = adminService.modifyDepartment(departmentId, name);
-		return new ResponseEntity<>(modifiedDepartment, HttpStatus.OK);
-	}
-
-	@GetMapping("/departments/{departmentId}")
-	public ResponseEntity<Object> findDepartmentById(@PathVariable int departmentId)
-			throws DepartmentException, LoginException {
-		Department department = adminService.findDepartmentById(departmentId);
-		return new ResponseEntity<>(department, HttpStatus.OK);
-	}
-
-	@PostMapping("/operators/{departmentId}")
-	public ResponseEntity<Operator> addOperator(@Valid @RequestBody Operator operator, @PathVariable int departmentId)
-			throws LoginException, DepartmentException {
-		Operator savedOperator = adminService.addOperator(operator, departmentId);
-		return new ResponseEntity<>(savedOperator, HttpStatus.CREATED);
-	}
-
-	@DeleteMapping("/operators/{operatorId}")
-	public ResponseEntity<Object> removeOperator(@PathVariable int operatorId)
-			throws OperatorException, LoginException {
-		Operator removedOperator = adminService.removeOperatorById(operatorId);
-		return new ResponseEntity<>(removedOperator, HttpStatus.OK);
-	}
-
-	@PutMapping("/operators/{operatorId}")
-	public ResponseEntity<Object> modifyOperator(@PathVariable int operatorId, @RequestBody Operator operator)
-			throws OperatorException, LoginException {
-		Operator modifiedOperator = adminService.modifyOperator(operatorId, operator);
-		return new ResponseEntity<>(modifiedOperator, HttpStatus.OK);
-	}
-
-	@GetMapping("/operators/{operatorId}")
-	public ResponseEntity<Object> findOperatorById(@PathVariable int operatorId)
-			throws OperatorException, LoginException {
-		Operator operator = adminService.findOperatorById(operatorId);
-		return new ResponseEntity<>(operator, HttpStatus.OK);
-	}
-
-	@GetMapping("/allOperators")
-	public ResponseEntity<List<Operator>> getAllOperators() throws LoginException {
-		List<Operator> allOperators = adminService.getAllOperators();
-		return new ResponseEntity<>(allOperators, HttpStatus.OK);
-	}
+	    @GetMapping("/operators/{operatorId}")
+	    public ResponseEntity<Operator> findOperatorById(@PathVariable int operatorId) {
+	        try {
+	            // Call the service layer to find the operator by ID
+	            Operator operator = adminService.findOperatorById(operatorId);
+	            
+	            return ResponseEntity.ok(operator);
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        } catch (NotFoundException e) {
+	            // Handle the case where the operator with the given ID does not exist
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        }
+	    }
+	    
+	    @GetMapping("/operators/all")
+	    public ResponseEntity<List<Operator>> findAllOperators() {
+	        try {
+	            // Call the service layer to retrieve all operators
+	            List<Operator> operators = adminService.findAllOperators();
+	            
+	            return ResponseEntity.ok(operators);
+	        } catch (DatabaseOperationException e) {
+	            // Handle database-related exceptions
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	        }
+	    }
 }

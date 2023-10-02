@@ -20,50 +20,64 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
 public class AppConfig {
+	
+
 	@Bean
 	public SecurityFilterChain springSecurityConfiguration(HttpSecurity http) throws Exception {
 
 		http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			
 		.cors(cors ->{
+			
+			
 			cors.configurationSource(new CorsConfigurationSource() {
+				
 				@Override
 				public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-				CorsConfiguration configuration= new CorsConfiguration();
-					configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
-					configuration.setAllowedMethods(Collections.singletonList("*"));
-					configuration.setAllowCredentials(true);
-					configuration.setAllowedHeaders(Collections.singletonList("*"));
-					configuration.setExposedHeaders(Arrays.asList("Authorization"));
-					return configuration;
+					
+				CorsConfiguration cfg= new CorsConfiguration();
+				
+				
+				cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
+				cfg.setAllowedMethods(Collections.singletonList("*"));
+				cfg.setAllowCredentials(true);
+				cfg.setAllowedHeaders(Collections.singletonList("*"));
+				cfg.setExposedHeaders(Arrays.asList("Authorization"));
+				return cfg;				
+					
+					
+					
 				}
 			});
+			
+			
 		})
 		.authorizeHttpRequests(auth ->{
 			auth
-				.requestMatchers(HttpMethod.POST,"/users").permitAll()
-				// write all request for end points here
-		       
+				.requestMatchers(HttpMethod.POST,"/customers","admin/departments/add").permitAll()
+				.requestMatchers(HttpMethod.GET,"/signIn").hasAnyRole("USER","ADMIN","OPERATOR")
+				.requestMatchers(HttpMethod.GET,"/signIn").hasRole("USER")
+				.requestMatchers(HttpMethod.GET,"/signIn").hasRole("USER")
 				.anyRequest().authenticated();
+			
 				})
 			.csrf(csrf -> csrf.disable())
-			.formLogin(Customizer.withDefaults())
 			.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 			.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+			.formLogin(Customizer.withDefaults())
 			.httpBasic(Customizer.withDefaults());
 		
+		
 		return http.build();
+
 	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+
 		return new BCryptPasswordEncoder();
+
 	}
-}
-
-
-		
-
 	
 
-
+}

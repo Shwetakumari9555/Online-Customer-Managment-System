@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -16,11 +18,12 @@ import java.util.List;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int departmentd;
+    private int departmentId;
     
     @NotBlank(message = "Department name cannot be blank")
     private String departmentName;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "department")
     private List<Operator> operators;
 
