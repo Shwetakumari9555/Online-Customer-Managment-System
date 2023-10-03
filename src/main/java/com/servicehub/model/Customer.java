@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -37,7 +39,8 @@ public class Customer {
 
     @NotBlank(message = "City cannot be blank")
     private String city;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Call> calls;
     

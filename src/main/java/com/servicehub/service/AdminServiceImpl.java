@@ -10,17 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.servicehub.exception.DatabaseOperationException;
 import com.servicehub.exception.DepartmentAlreadyExistsException;
 import com.servicehub.exception.DepartmentNotFoundException;
+import com.servicehub.exception.DuplicateValueException;
 import com.servicehub.exception.NotFoundException;
 import com.servicehub.exception.OperatorAlreadyExistsException;
 import com.servicehub.model.Department;
 import com.servicehub.model.Login.UserType;
 import com.servicehub.model.Operator;
+import com.servicehub.model.Login;
 import com.servicehub.repository.DepartmentRepository;
+import com.servicehub.repository.LoginRepository;
 import com.servicehub.repository.OperatorRepository;
 
 @Service
@@ -31,6 +35,12 @@ public class AdminServiceImpl implements AdminService {
 	  
 	  @Autowired
 	  private OperatorRepository operatorRepository;
+	  
+	    @Autowired
+	    private PasswordEncoder passwordEncoder;
+	    
+		 @Autowired
+		 private LoginRepository loginRepository;
 
 	    @Override
 	    public boolean addDepartment(Department department) throws DatabaseOperationException, DepartmentAlreadyExistsException {
@@ -50,172 +60,137 @@ public class AdminServiceImpl implements AdminService {
 	    }
 
 	    @Override
-	    public boolean removeDepartment(int departmentId) throws DatabaseOperationException {
-	        try {
-	            // Check if the department with the given ID exists
-	            Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
-	            
-	            if (!optionalDepartment.isPresent()) {
-	                return false; // Department with the given ID does not exist
-	            }
-	            
-	            Department department = optionalDepartment.get();
+	    public String removeDepartment(Integer departmentId) throws  DepartmentNotFoundException {
+	        Optional<Department> existingDepartment = departmentRepository.findById(departmentId);
 
-	            // Perform any additional validations or checks here if needed
-	            // For example, you can check if the department can be removed based on certain conditions
-	            
-	            // Perform the removal
-	            departmentRepository.delete(department);
-	            
-	            return true; // Department removed successfully
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to remove department from the database.");
+	        if (!existingDepartment.isPresent()) {
+	            throw new DepartmentNotFoundException("Department doesn't exist with given departmentId");
 	        }
+
+	        departmentRepository.deleteById(departmentId);
+
+	        return "Department with Id: "+departmentId+ " Deleted Successfully";
 	    }
 
+	           
+
 	    @Override
-	    public Department modifyDepartment(Department department) throws DepartmentNotFoundException, DatabaseOperationException {
-	        try {
-	            // Check if the department with the given ID exists
-	            Optional<Department> optionalExistingDepartment = departmentRepository.findById(department.getDepartmentId());
+		public Department modifyDepartment(Department department, Integer departmentId) throws  DepartmentNotFoundException {
 
-	            if (!optionalExistingDepartment.isPresent()) {
-	                throw new DepartmentNotFoundException("Department with the given ID does not exist.");
-	            }
+		    Optional<Department> existingDepartment = departmentRepository.findById(departmentId);
 
-	            Department existingDepartment = optionalExistingDepartment.get();
+		    if (!existingDepartment.isPresent()) {
+		        throw new DepartmentNotFoundException("Department doesn't exist with given departmentId");
+		    }
 
-	            // Perform any additional validations or checks here if needed
-	            // For example, you can check if the department can be modified based on certain conditions
+		    Department departmentToUpdate = existingDepartment.get();
+		    departmentToUpdate.setDepartmentName(department.getDepartmentName());
 
-	            // Update the existing department's properties with the new values
-	            existingDepartment.setDepartmentName(department.getDepartmentName());
+		    Department updatedDepartment = departmentRepository.save(departmentToUpdate);
 
-	            // Save the updated department
-	            Department updatedDepartment = departmentRepository.save(existingDepartment);
+		    return updatedDepartment;
+		}
 
-	            return updatedDepartment; // Return the updated department
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to modify department in the database.");
-	        }
+	    @Override
+	    public Department findDepartmentById(Integer departmentId) throws DepartmentNotFoundException {
+
+			Optional<Department> existingDepartment = departmentRepository.findById(departmentId);
+			
+			if(!existingDepartment.isPresent()) 
+				throw new DepartmentNotFoundException("Department doesn't exist with given departmentId");
+			
+			return existingDepartment.get();
 	    }
-
+	    
+	    
+        //fixed--
 	    @Override
-	    public Department findDepartmentById(int departmentId) throws DepartmentNotFoundException, DatabaseOperationException {
-	        try {
-	            // Use the DepartmentRepository to find the department by its ID
-	            Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
+	    public Operator addOperator(Operator operator) throws DuplicateValueException {
+	        // Create a new Login entity for the operator
+	    	
+	    	 Optional<Login> findUsername = loginRepository.findByUsername(operator.getLogin().getUsername());
+	         
+	         if (findUsername.isPresent() && findUsername.get().getUsername().equals(operator.getLogin().getUsername())) {
+	             throw new DuplicateValueException("Username already exists");
+	         }
+	    	
+	        Login login = new Login();
+	        login.setUsername(operator.getLogin().getUsername());
+	        login.setPassword(passwordEncoder.encode(operator.getLogin().getPassword())); // Encode the password
+	        login.setType(operator.getLogin().getType());
+	        
+	        // Set the Login entity in the Operator
+	        loginRepository.save(login);
+	        
+	        operator.setLogin(login);
+	        
+	        // Save both Operator and Login entities
+	        operatorRepository.save(operator);
 
-	            if (optionalDepartment.isPresent()) {
-	                return optionalDepartment.get(); // Return the found department
-	            } else {
-	                throw new DepartmentNotFoundException("Department with the given ID does not exist.");
-	            }
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to retrieve department from the database.");
-	        }
-	    }
-
-	    @Override
-	    public boolean addOperator(Operator operator)throws OperatorAlreadyExistsException, DatabaseOperationException {
-	        try {
-	            
-	            // Check if the operator with the same username already exists
-	            if (operatorRepository.existsByUsername(operator.getLogin().getUsername())) {
-	                throw new OperatorAlreadyExistsException("Operator with the same username already exists.");
-	            }
-
-	            // Save the operator to the database
-	            operatorRepository.save(operator);
-
-	            return true; // Operator added successfully
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to add operator to the database.");
-	        }
-	    }
-
-	    @Override
-	    public boolean removeOperator(int operatorId) throws DatabaseOperationException {
-	        try {
-	            // Check if the operator with the given ID exists
-	            Optional<Operator> optionalOperator = operatorRepository.findById(operatorId);
-
-	            if (!optionalOperator.isPresent()) {
-	                return false; // Operator with the given ID does not exist
-	            }
-
-	            // Remove the operator from the database
-	            operatorRepository.deleteById(operatorId);
-
-	            return true; // Operator removed successfully
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to remove operator from the database.");
-	        }
-	    }
-
-	    @Override
-	    public Operator modifyOperator(Operator operator) throws NotFoundException ,DatabaseOperationException {
-	        try {
-	            // Check if the operator with the given ID exists
-	            Optional<Operator> optionalExistingOperator = operatorRepository.findById(operator.getOperatorld());
-
-	            if (!optionalExistingOperator.isPresent()) {
-	                throw new NotFoundException("Operator with the given ID does not exist.");
-	            }
-
-	            Operator existingOperator = optionalExistingOperator.get();
-
-	            // Perform any additional validations or checks here if needed
-	            // For example, you can check if the operator can be modified based on certain conditions
-
-	            // Update the existing operator's properties with the new values
-	            existingOperator.getLogin().setUsername(operator.getLogin().getUsername());
-	            existingOperator.getLogin().setPassword(operator.getLogin().getPassword());
-	            existingOperator.getLogin().setType(operator.getLogin().getType());
-
-	            // Save the updated operator to the database
-	            Operator updatedOperator = operatorRepository.save(existingOperator);
-
-	            return updatedOperator; // Return the updated operator
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to modify operator in the database.");
-	        }
-	    }
-
-	    @Override
-	    public Operator findOperatorById(int operatorId) throws DatabaseOperationException, NotFoundException {
-	        try {
-	            // Use the OperatorRepository to find the operator by ID
-	            Optional<Operator> optionalOperator = operatorRepository.findById(operatorId);
-
-	            if (optionalOperator.isPresent()) {
-	                return optionalOperator.get(); // Return the found operator
-	            } else {
-	                throw new NotFoundException("Operator with the given ID does not exist.");
-	            }
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to retrieve operator from the database.");
-	        }
+	        return operator;
 	    }
 
 
 	    @Override
-	    public List<Operator> findAllOperators() throws DatabaseOperationException {
-	        try {
-	            // Use the OperatorRepository to find all operators
-	            return operatorRepository.findAll();
-	        } catch (DataAccessException ex) {
-	            // Handle database-related exceptions
-	            throw new DatabaseOperationException("Failed to retrieve operators from the database.");
+	    public String removeOperator(Integer operatorId) throws DatabaseOperationException {
+	        Optional<Operator> existingOperator = operatorRepository.findById(operatorId);
+
+	        if (!existingOperator.isPresent()) {
+	            throw new DatabaseOperationException("Operator doesn't exist with given operatorId");
 	        }
+
+	        Operator deletedOperator = existingOperator.get();
+	        operatorRepository.deleteById(operatorId);
+
+	        return "Operator with id : "+operatorId+" deleted successfully"; 
 	    }
+
+		
+		
+
+		@Override
+	    public Operator modifyOperator(Operator operator, Integer operatorId) throws DatabaseOperationException {
+			
+	        Operator existingOperator = operatorRepository.findById(operatorId).orElseThrow(()-> new DatabaseOperationException("Not Found"));
+
+	       existingOperator.setFirstName(operator.getFirstName());
+	       existingOperator.setLastName(operator.getLastName());
+	        existingOperator.setEmail(operator.getEmail());
+	        existingOperator.setMobile(operator.getMobile());
+	        existingOperator.setCity(operator.getCity());
+	        existingOperator.setCalls(operator.getCalls());
+	        existingOperator.setDepartment(operator.getDepartment());
+	        
+	        return operatorRepository.save(existingOperator);
+		}
+
+		
+
+	    @Override
+	    public Operator findOperatorById(Integer operatorId) throws NotFoundException {
+	    	
+
+			Optional<Operator> existingOperator = operatorRepository.findById(operatorId);
+			
+			if(!existingOperator.isPresent()) 
+				throw new NotFoundException("Operator doesn't exist with with given operatorId");
+			
+			return existingOperator.get();
+	    }
+
+
+	    @Override
+		public List<Operator> findAllOperators() throws NotFoundException {
+
+			List<Operator> operators = operatorRepository.findAll();
+			
+			if (operators.isEmpty()) {
+				throw new NotFoundException("No operators found");
+			}
+			
+			return operators;
+		}
+
 
 
 	

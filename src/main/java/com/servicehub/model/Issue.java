@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -24,8 +26,8 @@ public class Issue {
     @NotBlank(message = "Description cannot be blank")
     private String description;
 
-    @NotBlank(message = "Issue status cannot be blank")
-    private String issueStatus;
+    @Enumerated(EnumType.STRING)
+    private Issue_Status status;
 
     @ManyToMany
     @JoinTable(
@@ -33,20 +35,28 @@ public class Issue {
         joinColumns = @JoinColumn(name = "issue_id"),
         inverseJoinColumns = @JoinColumn(name = "operator_id")
     )
+    
+    @JsonIgnore
     private List<Operator> operators;
 
     @OneToOne(mappedBy = "issue")
+    @JsonIgnore
     private Solution solution;
 
-	public Issue(String issueType, String description, String issueStatus, List<Operator> operators,
-			Solution solution) {
+	public Issue(int issueld, @NotBlank(message = "Issue type cannot be blank") String issueType,
+			@NotBlank(message = "Description cannot be blank") String description, Issue_Status status,
+			List<Operator> operators, Solution solution) {
 		super();
+		this.issueld = issueld;
 		this.issueType = issueType;
 		this.description = description;
-		this.issueStatus = issueStatus;
+		this.status = status;
 		this.operators = operators;
 		this.solution = solution;
 	}
+
+	
+	
     
     
     

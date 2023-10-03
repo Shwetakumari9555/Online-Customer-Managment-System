@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -54,17 +55,19 @@ public class AppConfig {
 		})
 		.authorizeHttpRequests(auth ->{
 			auth
-				.requestMatchers(HttpMethod.POST,"/customers","admin/departments/add").permitAll()
-				.requestMatchers(HttpMethod.GET,"/signIn").hasAnyRole("USER","ADMIN","OPERATOR")
-				.requestMatchers(HttpMethod.GET,"/signIn").hasRole("USER")
-				.requestMatchers(HttpMethod.GET,"/signIn").hasRole("USER")
+				.requestMatchers(HttpMethod.POST,"/customers/add").permitAll()
+				.requestMatchers("/swagger-ui*/**","/v3/api-docs/**").permitAll()
+				.requestMatchers(HttpMethod.GET,"/customers/logIn").permitAll()
+      			.requestMatchers(HttpMethod.POST,"/addOperator").permitAll()
+					.requestMatchers("/operator/accessToken").permitAll()
+				.requestMatchers(HttpMethod.GET,"/logIn").permitAll()
 				.anyRequest().authenticated();
 			
 				})
 			.csrf(csrf -> csrf.disable())
 			.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 			.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
-			.formLogin(Customizer.withDefaults())
+//			.formLogin(Customizer.withDefaults());
 			.httpBasic(Customizer.withDefaults());
 		
 		
@@ -78,6 +81,17 @@ public class AppConfig {
 		return new BCryptPasswordEncoder();
 
 	}
+	
+	
+//	@Bean
+//	CorsConfigurationSource corsConfigurationSource() {
+//		CorsConfiguration configuration = new CorsConfiguration();
+//		configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
+//		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		source.registerCorsConfiguration("/**", configuration);
+//		return (CorsConfigurationSource) source;
+//	}
 	
 
 }
