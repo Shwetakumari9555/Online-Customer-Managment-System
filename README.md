@@ -48,13 +48,17 @@ Explore Service Hub's user-friendly interface with these sample images:
 
 ![Sample Image 1]![Screenshot (3)]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/18c59480-12d5-4747-b23f-bd63f003382f" width="600px" height="500px">
 
-*Efficiently manage your call center operations.*
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 2](sample_images/sample2.png)
-*Customers can easily track their issues.*
+![Sample Image 2]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/74c2bbe4-6a72-4c1a-ad32-e433f921e352" width="600px" height="500px">
 
-![Sample Image 3](https://drive.google.com/file/d/16fJSE--E7S9yo6J8FtRSnqDzgwelr__m/view?usp=sharing)
-*Admins have full control over user and department management.*
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+![Sample Image 3]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/a0567b9f-ae22-40c7-b59a-132c30243b3f" width="600px" height="500px">
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+![Sample Image 4]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/e7060730-315f-4d6b-a7af-5a8a18a95411" width="600px" height="500px">
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Installation
 
