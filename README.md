@@ -46,35 +46,35 @@ Service Hub is packed with features to transform your call center operations:
 
 Explore Service Hub's user-friendly interface with these sample images:
 
-![Sample Image 1]!<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/18c59480-12d5-4747-b23f-bd63f003382f" width="600px" height="500px">
+![Indec Page]!<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/18c59480-12d5-4747-b23f-bd63f003382f" width="600px" height="500px">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 2]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/74c2bbe4-6a72-4c1a-ad32-e433f921e352" width="600px" height="500px">
+![Services Offered]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/74c2bbe4-6a72-4c1a-ad32-e433f921e352" width="600px" height="500px">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-![Sample Image 3]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/a0567b9f-ae22-40c7-b59a-132c30243b3f" width="600px" height="500px">
-
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-![Sample Image 4]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/e7060730-315f-4d6b-a7af-5a8a18a95411" width="600px" height="500px">
+![Footer]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/a0567b9f-ae22-40c7-b59a-132c30243b3f" width="600px" height="500px">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 5]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/1c420f36-fcee-4770-85c7-996a685e20f5" width="600px" height="500px">
+![Members]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/e7060730-315f-4d6b-a7af-5a8a18a95411" width="600px" height="500px">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 6]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/06a114c3-70fc-4dca-b1e9-105ccc6fa3f2" width="600px" height="500px">
+![LOGIN]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/1c420f36-fcee-4770-85c7-996a685e20f5" width="600px" height="500px">
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+![Register]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/06a114c3-70fc-4dca-b1e9-105ccc6fa3f2" width="600px" height="500px">
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 7]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/5a340f2c-0025-46a3-9969-d61e96ec50a0" width="600px" height="500px">
+![Customer Dashboard]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/5a340f2c-0025-46a3-9969-d61e96ec50a0" width="600px" height="500px">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 8]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/56f3ce17-bd4a-42d1-80c7-5fb9b48eb080" width="600px" height="500px">
+![Controller _Swagger]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/56f3ce17-bd4a-42d1-80c7-5fb9b48eb080" width="600px" height="500px">
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ Get Service Hub up and running on your local machine with these simple steps:
 spring.datasource.url=jdbc:mysql://localhost:3306/servicehub
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.username=root
-spring.datasource.password=your-mysql-password
+spring.datasource.password=Shweta@1234
 
 spring.jpa.show_sql=true
 spring.jpa.hibernate.ddl-auto=update
