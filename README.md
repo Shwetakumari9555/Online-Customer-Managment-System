@@ -115,9 +115,10 @@ If you're passionate about improving Service Hub, we welcome your contributions:
 3. Make your changes and commit them: `git commit -m 'Description of your changes'`
 4. Push your changes to your fork: `git push origin feature-name`
 5. Create a pull request to the main repository.
+https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/6616bd51-f8ae-41a8-b8cf-c4ac8ad581f0
 
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/6616bd51-f8ae-41a8-b8cf-c4ac8ad581f0
+
 
 <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/6616bd51-f8ae-41a8-b8cf-c4ac8ad581f0" width="600px" height="500px">
 
