@@ -1,6 +1,6 @@
 # Service Hub
 
-![Service Hub Logo]()
+<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/fe715170-caf7-41da-a671-72107ea06e1b" width="200px" height="200px">
 
 ## Project Description
 
