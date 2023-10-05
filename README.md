@@ -3,9 +3,6 @@
 <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/054927df-e02e-4f6b-8f3c-38cd36a06788" width="300px" height="300px">
 
 
-
-![Service Hub Logo](sample_images/service_hub_logo.png)
-
 ## Project Description
 
 Service Hub is a cutting-edge call center management system designed to revolutionize call center operations. Our mission is to maximize "one and done" customer interactions, enhance operational efficiency, and elevate customer satisfaction to new heights.
