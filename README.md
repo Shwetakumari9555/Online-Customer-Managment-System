@@ -46,13 +46,14 @@ Service Hub is packed with features to transform your call center operations:
 
 Explore Service Hub's user-friendly interface with these sample images:
 
-![Sample Image 1](sample_images/sample1.png)
+![Sample Image 1] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/706cd2f6-5615-4aa5-baaf-3bd6f50a5644" width="200px" height="200px">
+
 *Efficiently manage your call center operations.*
 
-![Sample Image 2](sample_images/sample2.png)
+![Sample Image 2]
 *Customers can easily track their issues.*
 
-![Sample Image 3](sample_images/sample3.png)
+![Sample Image 3]
 *Admins have full control over user and department management.*
 
 ## Installation
