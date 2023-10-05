@@ -143,7 +143,7 @@ If you're passionate about improving Service Hub, we welcome your contributions:
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/ad844f14-3841-4162-96a9-6afd56e5114c" width="700px" height="600px">
+<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/ad844f14-3841-4162-96a9-6afd56e5114c" width="550px" height="500px">
 
 
 
