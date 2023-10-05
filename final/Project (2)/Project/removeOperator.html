@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remove Department</title>
+  <style>
+   body {
+  font-family: 'Helvetica Neue', sans-serif; /* Use a more modern font */
+  background-color: #303030; /* Dark background color */
+  margin: 0;
+  padding: 0;
+  color: #fff; /* Text color */
+}
+
+.container {
+  max-width: 600px; /* Wider container */
+  margin: 0 auto;
+  background-color: #424242; /* Darker background color */
+  padding: 30px; /* More padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced box shadow */
+  margin-top: 50px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px; /* Increased margin */
+  color: #FFA500; /* Orange heading color */
+}
+
+#box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px; /* Increased gap between elements */
+  margin-top: 40px; /* Increased top margin */
+}
+
+.left-container {
+  text-align: center;
+}
+
+h4 {
+  margin-top: 0;
+  color: #FFA500; /* Orange subheading color */
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 15px; /* More padding */
+  border: 2px solid #666; /* Darker border */
+  border-radius: 5px; /* Slightly rounded edges */
+  background-color: #282828; /* Dark input background */
+  color: #fff; /* Text color */
+}
+
+.button {
+  display: inline-block; /* Inline block for button */
+  width: auto; /* Adjust width based on content */
+  padding: 15px 30px; /* More padding */
+  margin-top: 30px; /* Increased top margin */
+  color: #fff;
+  background-color: #FF4500; /* Reddish-orange button color */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px; /* Slightly larger font */
+  cursor: pointer;
+  margin-left: 36.2%;
+
+  transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #FF6347; /* Slightly darker orange on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Remove Operator</h1>
+    <div id="box">
+      <div class="left-container">
+        <h4>Operator ID</h4>
+        <input required type="text" id="operatorId" placeholder="Enter Operator ID" />
+      </div>
+    </div>
+    <button id="removeOperator" class="button">Remove Operator</button>
+  </div>
+
+</body>
+
+</html>
+<script>
+  let removeOperatorBtn = document.getElementById('removeOperator');
+  let operatorIdInput = document.getElementById('operatorId');
+
+  
+
+  let accessToken = localStorage.getItem("accessToken");
+
+
+let responseObj = {};
+
+removeOperatorBtn.addEventListener("click", () => {
+    fetch(`http://localhost:8080/deleteOperator/${operatorIdInput.value}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + accessToken
+        }
+    }).then((e) => {
+        if (e.status == 200 || e.status == 201) {
+            alert("Operator Deleted");
+            window.location.reload();
+        }else{
+            alert("Something Error")
+          }
+        return e.json();
+    }).then((data) => {
+        responseObj = data
+        console.log(data);
+    }).catch((error) => console.log(error));
+})
+</script>

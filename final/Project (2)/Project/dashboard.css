@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background: linear-gradient(45deg, #3498db, #8e44ad);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Box container styles */
+.box-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns per row */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Box styles */
+.box {
+  background-color: #f0f0f0; /* Updated background color */
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.box img {
+  max-width: 100px;
+  margin-bottom: 20px;
+  border-radius: 50%; /* Rounded images */
+}
+
+.box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.box p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  background: #007BFF;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Hover effect on boxes */
+.box:hover {
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  background: linear-gradient(45deg, #ff6b6b, #ffaf40); /* Gradient background with different colors */
+  color: #fff;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  .box-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* Keyframes for color change */
+@keyframes colorChange {
+    0% {
+      color: #00a1e4; /* Initial color */
+    }
+    50% {
+      color: #ff6b6b; /* Midway color */
+    }
+    100% {
+      color: #00a1e4; /* Final color */
+    }
+  }
+  
+  /* Keyframes for glowing effect */
+  @keyframes glow {
+    0% {
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+    100% {
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+  /* Apply the animations */
+  .heading {
+    animation: colorChange 2s infinite alternate, glow 2s infinite alternate;
+  }
+  

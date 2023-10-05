@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Operator</title>
+  <style>
+  body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #25274d; /* Dark blue background color */
+  margin: 0;
+  padding: 0;
+  color: #fff; /* Text color */
+}
+
+.container {
+  max-width: 600px; /* Wider container */
+  margin: 0 auto;
+  background-color: #fff; /* White background color */
+  padding: 30px; /* More padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced box shadow */
+  margin-top: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px; /* Increased margin */
+  color: #ff6f61; /* Reddish-orange heading color */
+}
+
+#box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px; /* Increased gap between elements */
+  margin-top: 40px; /* Increased top margin */
+}
+
+.left-container {
+  text-align: center;
+}
+
+h4 {
+  margin-top: 0;
+  color: #ff6f61; /* Reddish-orange subheading color */
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 15px; /* More padding */
+  border: 2px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Slightly rounded edges */
+  background-color: #f0f0f0; /* Light gray input background */
+  color: #333; /* Dark text color */
+  margin-left:-15px;
+}
+
+.button {
+  display: inline-block; /* Inline block for button */
+  width: auto; /* Adjust width based on content */
+  padding: 15px 30px; /* More padding */
+  margin-top: 30px; /* Increased top margin */
+  color: #fff;
+  background-color: #4a90e2; /* Blue button color */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px; /* Slightly larger font */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
+  margin-left: 200px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #357abd; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Add Operator</h1>
+    <div id="box">
+      <div class="left-container">
+        <h4>Add Operator Details</h4>
+        <input required type="text" id="name" placeholder="Name" />
+        <input required type="text" id="email" placeholder="Email" />
+        <input required type="text" id="username" placeholder="Username" />
+        <input required type="text" id="password" placeholder="Password" />
+        <input required type="text" id="mobile" placeholder="Mobile" />
+        <input required type="text" id="city" placeholder="City" />
+
+
+      </div>
+    </div>
+    <button id="add_operator" class="button">Add Operator</button>
+  </div>
+</body>
+</html>
+
+<script>
+
+// Add Operator
+let pushData = document.getElementById('add_operator')
+
+let name = document.getElementById("name");
+let email = document.getElementById("email");
+let username = document.getElementById("username");
+let password = document.getElementById("password");
+let mobile = document.getElementById("mobile");
+let city = document.getElementById("city");
+
+let responseObj = {};
+
+
+pushData.addEventListener("click", () => {
+    fetch("http://localhost:8080/addOperator", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.value,
+          email: email.value,
+          username: username.value,
+          password: password.value,
+          mobile: mobile.value,
+          city: city.value
+          
+        })
+    }).then((e) => {
+        if (e.status == 200 || e.status == 201) {
+            alert("Operator Added");
+            window.location.reload();
+        }else{
+            alert("Something Error")
+          }
+        return e.json();
+    }).then((data) => {
+        responseObj = data
+        console.log(data);
+    }).catch((error) => console.log(error));
+})
+
+</script>

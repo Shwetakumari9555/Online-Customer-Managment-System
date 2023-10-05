@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Operator by ID</title>
+    <style>
+      body {
+  background-color: #1e1e1e; /* Dark background color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff; /* Text color */
+}
+
+.container {
+  max-width: 600px; /* Wider container */
+  margin: 0 auto;
+  background-color: #333; /* Darker background color */
+  padding: 30px; /* More padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced box shadow */
+  margin-top: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px; /* Increased margin */
+  color: #ff6f61; /* Reddish-orange heading color */
+}
+
+form {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #ff6f61; /* Reddish-orange label color */
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 15px; /* More padding */
+  border: 2px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Slightly rounded edges */
+  background-color: #f0f0f0; /* Light gray input background */
+  color: #333; /* Dark text color */
+  margin-left: -17px;
+}
+
+.button {
+  display: inline-block; /* Inline block for button */
+  width: auto; /* Adjust width based on content */
+  padding: 15px 30px; /* More padding */
+  margin-top: 30px; /* Increased top margin */
+  color: #fff;
+  background-color: #4a90e2; /* Blue button color */
+  border: none;
+  border-radius: 5px;
+  font-size: 18px; /* Slightly larger font */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #357abd; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+table {
+  width: 100%;
+  margin-top: 30px;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 12px; /* Increased padding */
+  border: 2px solid #ccc; /* Light gray border */
+}
+
+table th {
+  background-color: #ff6f61; /* Reddish-orange header background color */
+  color: #fff; /* Text color */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find Operator by ID</h1>
+        <form id="findOperatorForm">
+            <label for="operatorId">Operator ID</label>
+            <input type="text" id="operatorId" placeholder="Enter Operator ID">
+            <button type="submit" class="button" id="findButton">Find</button>
+        </form>
+
+        
+    </div>
+
+    <table id="operatorTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Mobile</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody id="operatorDetails">
+            <!-- Append the operator details here using JavaScript -->
+        </tbody>
+    </table>
+
+
+    <script>
+        let findButton = document.getElementById('findButton');
+        let operatorIdInput = document.getElementById('operatorId');
+
+        document.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+
+            fetch(`http://localhost:8080/operator/${operatorIdInput.value}`, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Request failed with status code " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log(result); // Log the response to inspect the data
+
+                    // Append the operator details to the table
+                    var operatorDetails = document.getElementById("operatorDetails");
+                    operatorDetails.innerHTML = ""; // Clear existing data
+
+                    var row = document.createElement("tr");
+                    var idCell = document.createElement("td");
+                    var nameCell = document.createElement("td");
+                    var emailCell = document.createElement("td");
+                    var usernameCell = document.createElement("td");
+                    var passwordCell = document.createElement("td");
+                    var mobileCell = document.createElement("td");
+                    var cityCell = document.createElement("td");
+
+                    idCell.innerText = result.operatorId || "N/A";
+                    nameCell.innerText = result.name || "N/A";
+                    emailCell.innerText = result.email || "N/A";
+                    usernameCell.innerText = result.username || "N/A";
+                    passwordCell.innerText = result.password || "N/A";
+                    mobileCell.innerText = result.mobile || "N/A";
+                    cityCell.innerText = result.city || "N/A";
+
+                    row.appendChild(idCell);
+                    row.appendChild(nameCell);
+                    row.appendChild(emailCell);
+                    row.appendChild(usernameCell);
+                    row.appendChild(passwordCell);
+                    row.appendChild(mobileCell);
+                    row.appendChild(cityCell);
+
+                    operatorDetails.appendChild(row);
+                })
+                .catch(error => console.log('error', error));
+        });
+    </script>
+
+</body>
+
+</html>

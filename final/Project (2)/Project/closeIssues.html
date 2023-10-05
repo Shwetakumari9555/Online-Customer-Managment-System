@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Close Issues</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .left-container {
+      text-align: center;
+    }
+
+    h4 {
+      margin-top: 0;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      color: #ffffff;
+      background-color: rgb(109, 105, 220);
+      border: none;
+      border-radius: 3px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      cursor: pointer;
+      background-color: rgb(228, 98, 98);
+    }
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Close Customer Issue</h1>
+        <div id="box">
+          <div class="left-container">
+            <h4>Issue ID</h4>
+            <input required type="text" id="issueId" placeholder="Enter Issue ID" />
+          </div>
+        </div>
+        <button id="closeIssueBtn" class="button">Close Issue</button>
+      </div>
+
+
+
+
+</body>
+
+</html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const closeIssueBtn = document.getElementById('closeIssueBtn');
+    closeIssueBtn.addEventListener('click', closeIssue);
+
+    let accessToken = localStorage.getItem("accessToken");
+
+    function closeIssue() {
+      const issueIdInput = document.getElementById('issueId');
+      const issueId = issueIdInput.value;
+
+      if (issueId.trim() === '') {
+        alert('Please enter an Issue ID');
+        return;
+      }
+
+      const issue = {
+        issueId: parseInt(issueId),
+        // Add other properties of the issue object if needed
+      };
+
+      fetch('http://localhost:8080/operator/close/' + issueId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+accessToken
+        },
+        body: JSON.stringify(issue),
+      })
+        .then(function(response) {
+          if (response.ok) {
+            return response.text();
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(function(data) {
+          alert(data); // Show success message
+          // Clear the input field
+          issueIdInput.value = '';
+        })
+        .catch(function(error) {
+          alert('Error: ' + error.message);
+        });
+    }
+  });
+</script>

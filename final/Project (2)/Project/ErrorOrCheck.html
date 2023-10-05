@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-open Issues</title>
+    <link rel="icon" href="/images/P&P Logo.png" type="image/icon type">
+
+    <style>
+        body {
+            background-color: rgb(240, 242, 244);
+            font-family: 'Poppins', sans-serif;
+            width: 90%;
+            margin-top: 75px;
+            margin-left: 100px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #main {
+            height: auto;
+            width: 50%;
+            margin: 50px auto 50px;
+            padding-top: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background-color: white;
+        }
+
+        form {
+            padding-bottom: 50px;
+        }
+
+        form>h3>a {
+            color: rgb(62, 190, 180);
+        }
+
+        form>h3 {
+            margin-top: 25px;
+            padding-left: 30%;
+            color: rgb(59, 58, 58);
+        }
+
+        form>h1 {
+            margin-top: 25px;
+            text-align: left;
+            padding-left: 10%;
+            color: rgb(59, 58, 58);
+        }
+
+        form>h4 {
+            text-align: left;
+            padding-left: 10%;
+            color: rgb(83, 82, 82);
+            margin-bottom: 10px;
+        }
+
+        form>input {
+            width: 75%;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgb(85, 200, 85);
+            background: transparent;
+            margin-bottom: 10px;
+        }
+
+        .next {
+            margin-top: 25px;
+            width: 80%;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgb(109, 105, 220);
+            font-size: 16px;
+            color: white;
+            border: 1px solid rgb(105, 220, 105);
+            transition: 0.5s linear;
+        }
+
+        .next:hover {
+            cursor: pointer;
+            background-color: rgb(98, 159, 228);
+            transform: scale(1.05);
+            z-index: 2;
+            color: black;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        table th,
+        table td,
+        table tr {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            color: black;
+            height: 20px;
+            background-color: white;
+        }
+
+        table th {
+            background-color: rgb(109, 105, 220);
+            color: white;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <h1>Reopen Issues</h1>
+        <form>
+            <h4>Issue ID</h4>
+            <input type="text" placeholder="Enter Issue ID" id="issueId">
+            <button type="submit" class="next">Find</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Issue ID</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="issueTableBody">
+            <!-- Append the issue details here using JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var form = document.querySelector("form");
+    
+          form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+    
+            var issueId = document.getElementById("issueId").value;
+    
+            var requestOptions = {
+              method: 'PUT',
+              redirect: 'follow'
+            };
+    
+            // Make the PUT request to reopen the issue
+            fetch("http://localhost:8080/" + issueId + "/reopen", requestOptions)
+              .then(response => response.json())
+              .then(result => {
+                console.log(result);
+    
+                // Update the table with the reopened issue
+                var issueTableBody = document.getElementById("issueTableBody");
+                issueTableBody.innerHTML = ""; // Clear existing table rows
+    
+                var newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                  <td>${result.issueId}</td>
+                  <td>${result.issueType}</td>
+                  <td>${result.description}</td>
+                  <td>${result.status}</td>
+                `;
+                issueTableBody.appendChild(newRow);
+              })
+              .catch(error => console.log('error', error));
+          });
+        });
+      </script>
+ 
+
+</body>
+
+</html>

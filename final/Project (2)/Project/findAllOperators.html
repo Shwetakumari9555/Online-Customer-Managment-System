@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Operators</title>
+    <style>
+      body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1e1e1e; /* Dark background color */
+  margin: 0;
+  padding: 0;
+  color: #fff; /* Text color */
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #333; /* Darker background color */
+  padding: 30px; /* More padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced box shadow */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px; /* Increased margin */
+  color: #ffc107; /* Yellow heading color */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px; /* Increased padding */
+  text-align: left;
+  border-bottom: 1px solid #666; /* Darker border */
+}
+
+th {
+  background-color: #007bff; /* Blue header background color */
+  color: #fff; /* Text color */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>List of Operators</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Operator ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Mobile Number</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                 <!-- Append your output here -->
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+<script>
+
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/allOperators", requestOptions)
+  .then(response => response.json())
+  .then(data => {
+    var tbody = document.querySelector("tbody");
+    data.forEach(operator => {
+      var row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${operator.operatorId}</td>
+        <td>${operator.name}</td>
+        <td>${operator.email}</td>
+        <td>${operator.username}</td>
+        <td>${operator.password}</td>
+        <td>${operator.mobile}</td>
+        <td>${operator.city}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  })
+  .catch(error => console.log('Error:', error));
+
+
+</script>

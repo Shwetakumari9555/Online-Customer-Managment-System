@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Department by ID</title>
+    <link rel="icon" href="/images/P&P Logo.png" type="image/icon type">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        body {
+            background-color: rgb(240, 242, 244);
+            font-family: 'Poppins', sans-serif;
+            width: 90%;
+            margin-top: 75px;
+            margin-left: 100px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #main {
+            height: auto;
+            width: 50%;
+            margin: 50px auto 50px;
+            padding-top: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background-color: white;
+        }
+
+        form {
+            padding-bottom: 50px;
+        }
+
+        form>h3>a {
+            color: rgb(62, 190, 180);
+        }
+
+        form>h3 {
+            margin-top: 25px;
+            padding-left: 30%;
+            color: rgb(59, 58, 58);
+        }
+
+        form>h1 {
+            margin-top: 25px;
+            text-align: left;
+            padding-left: 10%;
+            color: rgb(59, 58, 58);
+        }
+
+        form>h4 {
+            text-align: left;
+            padding-left: 10%;
+            color: rgb(83, 82, 82);
+            margin-bottom: 10px;
+        }
+
+        form>input {
+            width: 75%;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgb(85, 200, 85);
+            background: transparent;
+        }
+
+        .next {
+            margin-top: 25px;
+            width: 80%;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgb(109, 105, 220);
+            font-size: 16px;
+            color: white;
+            border: 1px solid rgb(105, 220, 105);
+            transition: 0.5s linear;
+        }
+
+        .next:hover {
+            cursor: pointer;
+            background-color: rgb(98, 159, 228);
+            transform: scale(1.05);
+            z-index: 2;
+            color: black;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        table th,
+        table td,
+        table tr {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            color: black;
+            height: 20px;
+            background-color: white;
+
+        }
+
+        table th {
+            background-color: rgb(109, 105, 220);
+            color: white;
+        }
+
+        .departmentImg {
+            width: 25%;
+            padding: 0;
+        }
+
+        .departmentImg>img {
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <h1>Find Department by ID</h1>
+        <form>
+            <h4>Department ID</h4>
+            <input type="text" placeholder="Enter Department ID" id="departmentId">
+  
+
+            <button type="submit" class="next" id="findButton">Find</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+               <th>Id
+                <tr id="id"></tr>
+               </th>
+                <th>Name
+                    <tr id="name"></tr>
+                </th>
+              
+            </tr>
+        </thead>
+        <tbody id="departmentDetails">
+            <!-- Append the department details here using JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        let findButton = document.getElementById('findButton');
+        let departmentIdInput = document.getElementById('departmentId');
+        let accessToken = localStorage.getItem("accessToken");
+        let responseObj = {};
+
+        document.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
+                fetch(`http://localhost:8080/getDepartment/${departmentIdInput.value}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken
+                    },
+                }).then((e) => {
+                    return e.json();
+                }).then((data) => {
+                    responseObj = data
+                    display(responseObj)
+                    console.log(responseObj);
+                }).catch((error) => alert("Department is not there"));
+            })  
+
+            let id=document.getElementById("id");
+            let name=document.getElementById("name");
+            function display(data){
+            id.innerText = data.departmentId;
+            name.innerText = data.departmentName;
+            }
+
+    </script>
+
+</body>
+
+</html>

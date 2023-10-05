@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Page</title>
+    <link rel="stylesheet" href="login.css">
+     
+</head>
+
+<body>
+    
+    <div class="box">
+        <span class="borderLine"></span>
+        <form id="loginForm">
+            <h2>Sign in</h2>
+            <div class="inputBox">
+                <input type="text" required="required">
+                <span>UserName</span>
+                <i></i>
+            </div>
+    
+            <div class="inputBox">
+                <input type="password" required="required">
+                <span>Password</span>
+                <i></i>
+            </div>
+            <div class="links">
+                <a href="#">Forgot Password</a>
+                <a href="register.html">Sign Up</a>
+            </div>
+    
+            <button id="loginButton">Login</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("loginForm");
+            var loginButton = document.getElementById("loginButton");
+    
+            loginButton.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent the default button click behavior
+    
+                var username = form.querySelector('input[type="text"]').value;
+                var password = form.querySelector('input[type="password"]').value;
+    
+                // Replace this condition with your actual authentication logic
+                if (username === "your_username" && password === "your_password") {
+                     window.location.href = "\customer_dashbard.html"; // Redirect to the dashboard
+                } else {
+                    alert("Login failed. Please check your credentials.");
+                }
+            });
+        });
+    </script>
+    <!-- C:\Users\DELL\Desktop\backend\Project (2)\Project\customer_dashbard.html -->
+    
+</body>
+</html>
