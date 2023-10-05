@@ -71,6 +71,7 @@ Explore Service Hub's user-friendly interface with these sample images:
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 *Admins have full control over user and department management.*
+
 ![Sample Image 5] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/c4cbad29-0cb7-4864-80bd-cf92417c91f2" width="600" height="500">
 
 
