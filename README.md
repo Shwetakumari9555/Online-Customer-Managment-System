@@ -51,46 +51,47 @@ Explore Service Hub's user-friendly interface with these sample images:
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 *Efficiently manage your call center operations.*
-![Sample Image 2]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/879fc16e-5cd6-4763-80e6-20bac2708a8a" width="600" height="500">
+
+![Sample Image 2] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/879fc16e-5cd6-4763-80e6-20bac2708a8a" width="600" height="500">
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 *Customers can easily track their issues.*
 
-![Sample Image 3]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/1fdda14f-565f-49a2-aba2-060e8643fa9f" width="600" height="500">
+![Sample Image 3] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/1fdda14f-565f-49a2-aba2-060e8643fa9f" width="600" height="500">
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 4]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/2b73e36e-e4aa-4cb8-9fb5-91c467af2ecb" width="600" height="500">
+![Sample Image 4] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/2b73e36e-e4aa-4cb8-9fb5-91c467af2ecb" width="600" height="500">
 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 *Admins have full control over user and department management.*
-![Sample Image 5]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/c4cbad29-0cb7-4864-80bd-cf92417c91f2" width="600" height="500">
+![Sample Image 5] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/c4cbad29-0cb7-4864-80bd-cf92417c91f2" width="600" height="500">
 
 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 6]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/a3ce772f-b1a1-4e2d-b842-e64794ff635a" width="600" height="500">
+![Sample Image 6] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/a3ce772f-b1a1-4e2d-b842-e64794ff635a" width="600" height="500">
 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-![Sample Image 7]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/7105e5da-fb83-428a-9142-44175b13fd5f" width="600" height="500">
+![Sample Image 7] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/7105e5da-fb83-428a-9142-44175b13fd5f" width="600" height="500">
 
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-![Sample Image 8]<img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/71345a63-fc38-401c-abe3-efc3a4841aa6" width="600" height="500">
+![Sample Image 8] <img src="https://github.com/Shwetakumari9555/vogue-pocket-8479/assets/119388217/71345a63-fc38-401c-abe3-efc3a4841aa6" width="600" height="500">
 
 
 
