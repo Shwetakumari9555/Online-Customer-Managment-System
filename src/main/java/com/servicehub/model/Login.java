@@ -32,7 +32,6 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int loginld;
     
-    @Column(unique = true)
     @NotBlank(message = "Password cannot be empty")
     private String username;
 

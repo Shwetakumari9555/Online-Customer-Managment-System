@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @NoArgsConstructor
 @Getter
 @Setter
@@ -26,8 +28,7 @@ public class Operator {
     private String lastName;
 
     @NotBlank(message = "you must provide the operator email")
-	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9.]+\\\\.[a-z] {2,3}", flags = Flag.CASE_INSENSITIVE,
-			message="Invaid email id")
+	@Email
     private String email;
 
     @NotBlank(message = "Mobile number cannot be blank")
@@ -36,19 +37,22 @@ public class Operator {
 
     @NotBlank(message = "City cannot be blank")
     private String city;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "operator")
     private List<Call> calls;
-
+    
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
-
+    
     @ManyToMany(mappedBy = "operators")
     private List<Issue> issues;
     
     @OneToOne
     @JoinColumn(name = "login_id")
+//    @JsonIgnore
     private Login login;
 
     public Operator(String firstName, String lastName, String email, String mobile, String city, List<Call> calls,
@@ -62,6 +66,22 @@ public class Operator {
         this.department = department;
         this.issues = issues;
     }
+
+	public Operator(int operatorld, @NotBlank(message = "First name cannot be blank") String firstName,
+			@NotBlank(message = "Last name cannot be blank") String lastName,
+			@NotBlank(message = "you must provide the operator email") @Email String email,
+			@NotBlank(message = "Mobile number cannot be blank") @Pattern(regexp = "[6-9][0-9]{9}", message = "Invaid mobile number") String mobile,
+			@NotBlank(message = "City cannot be blank") String city) {
+		super();
+		this.operatorld = operatorld;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.mobile = mobile;
+		this.city = city;
+	}
+    
+    
 }
 
 

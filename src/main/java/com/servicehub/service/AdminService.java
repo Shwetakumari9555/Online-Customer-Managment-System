@@ -6,6 +6,7 @@ import java.util.List;
 import com.servicehub.exception.DatabaseOperationException;
 import com.servicehub.exception.DepartmentAlreadyExistsException;
 import com.servicehub.exception.DepartmentNotFoundException;
+import com.servicehub.exception.DuplicateValueException;
 import com.servicehub.exception.NotFoundException;
 import com.servicehub.exception.OperatorAlreadyExistsException;
 import com.servicehub.model.Department;
@@ -15,21 +16,25 @@ public interface AdminService {
 
     boolean addDepartment(Department department) throws DatabaseOperationException, DepartmentAlreadyExistsException;
 
-    boolean removeDepartment(int departmentId) throws DatabaseOperationException;
+//    public String removeDepartment(int departmentId) throws DatabaseOperationException;
 
-    Department modifyDepartment(Department department) throws DepartmentNotFoundException, DatabaseOperationException;
+    Department modifyDepartment(Department department, Integer departmentId) throws DepartmentNotFoundException;
 
-    Department findDepartmentById(int departmentId) throws DepartmentNotFoundException, DatabaseOperationException;
+    Department findDepartmentById(Integer departmentId) throws DepartmentNotFoundException;
 
-    boolean addOperator(Operator operator) throws OperatorAlreadyExistsException, DatabaseOperationException;
+    public Operator addOperator(Operator operator) throws  DuplicateValueException ;
 
-    boolean removeOperator(int operatorId) throws DatabaseOperationException;
+   
 
-    Operator modifyOperator(Operator operator) throws NotFoundException ,DatabaseOperationException ;
+    public Operator modifyOperator(Operator operator, Integer operatorId) throws DatabaseOperationException;
 
-    Operator findOperatorById(int operatorId) throws DatabaseOperationException, NotFoundException;
+    Operator findOperatorById(Integer operatorId) throws  NotFoundException;
 
-    List<Operator> findAllOperators() throws DatabaseOperationException;
+    List<Operator> findAllOperators() throws NotFoundException;
+
+	String removeOperator(Integer operatorId) throws DatabaseOperationException;
+
+	String removeDepartment(Integer departmentId) throws  DepartmentNotFoundException;
 
 //	List<Operator> findAllOperators(int page, int pageSize) throws DatabaseOperationException;
 }
