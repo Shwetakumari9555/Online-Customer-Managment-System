@@ -7,6 +7,8 @@
 
 Service Hub is a cutting-edge call center management system designed to revolutionize call center operations. Our mission is to maximize "one and done" customer interactions, enhance operational efficiency, and elevate customer satisfaction to new heights.
 
+--Project live link-- [https://lively-sundae-72cddc.netlify.app/]
+
 ## Table of Contents
 
 - [Languages Used](#languages-used)
